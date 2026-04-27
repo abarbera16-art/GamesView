@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamesView - Helldivers 2</title>
+    <link rel="icon" type="image/jpeg" href="../Images/favicon.jpeg">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/lanzamiento_page.css">
+</head>
+<body>
+    <input type="checkbox" id="acc-contraste" class="hidden-acc">
+    <input type="checkbox" id="acc-dislexia" class="hidden-acc">
+    <input type="checkbox" id="acc-texto" class="hidden-acc">
+    <input type="checkbox" id="acc-subtitulos" class="hidden-acc">
+
+    <div class="wrapper-accesibilidad">
+        <header class="futuristic-header">
+            <div class="header-container">
+                <a href="../Code/menu principal.html" class="logo-link">
+                    <img src="../Images/favicon.jpeg" alt="GAMESVIEW CORE">
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="../Code/reviews_indice.html">Reviews</a></li>
+                        <li><a href="../Noticias/Noticias.HTML">Noticias</a></li>
+                        <li><a href="../Code/indice_lanzamientos.html">Lanzamientos</a></li>
+                    </ul>
+                </nav>
+                <form action="../Code/buscar.jsp" method="GET" class="search-form">
+                    <input type="search" name="query" placeholder="SCAN DATABASE...">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
+            <div class="panel-accesibilidad">
+                <label for="acc-contraste" class="btn-acc">🌓 Alto Contraste</label>
+                <label for="acc-dislexia" class="btn-acc">📖 Dislexia</label>
+                <label for="acc-texto" class="btn-acc">🔎 Texto +</label>
+            </div>
+        </header>
+
+        <main class="cyber-container">
+            <section class="game-header">
+                <h1 class="game-title">Helldivers 2</h1>
+                <hr>
+            </section>
+            <article class="game-content-grid">
+                <div class="game-cover-wrapper">
+                    <img src="../Images/helldivers2-intense-battle-scene-gtdqnzahgkaf4e9o.webp" alt="Helldivers 2">
+                </div>
+                <div class="game-details-panel">
+                    <h2>DATOS DEL SISTEMA</h2>
+                    <p class="game-description">
+                        ¡Únete a los Helldivers y lucha por la libertad en una galaxia hostil! Un trepidante shooter cooperativo en tercera persona donde la coordinación y las estratagemas son la clave absoluta de la victoria.
+                    </p>
+                    <div class="game-specs">
+                        <div><p><strong>DESARROLLADORA</strong> Arrowhead Game Studios</p></div>
+                        <div><p><strong>GÉNERO</strong> Shooter Cooperativo</p></div>
+                        <div><p><strong>LANZAMIENTO</strong> 08 de Febrero, 2024</p></div>
+                        <div><p><strong>PLATAFORMAS</strong> PC, PlayStation 5</p></div>
+                    </div>
+                    <a href="https://store.steampowered.com/app/2536360/HELLDIVERS_2/" target="_blank" rel="noopener noreferrer" class="btn-buy">RESERVAR AHORA - 39.99€</a>
+                </div>
+            </article>
+        </main>
+        <footer class="cyber-footer">
+            <p>GAMESVIEW CORE // STORE MODULE // © 2026</p>
+        </footer>
+    </div>
+</body>
+</html>

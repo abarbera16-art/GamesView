@@ -1,0 +1,101 @@
+/* ==========================================
+   REVIEWS.CSS - TABLA Y GALERÍA DE ANÁLISIS
+========================================== */
+.cyber-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.cyber-title {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--primary-blue);
+    border-left: 5px solid var(--neon-purple);
+    padding-left: 15px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+/* ==========================================
+   TABLA DE DATOS
+========================================== */
+.cyber-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(10, 15, 24, 0.85);
+    margin-bottom: 60px;
+    border: 1px solid rgba(188, 19, 254, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.cyber-table th, .cyber-table td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 168, 255, 0.1);
+}
+
+.cyber-table th {
+    background: rgba(188, 19, 254, 0.1);
+    color: var(--neon-cyan);
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
+
+.btn-link {
+    color: var(--neon-purple);
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-link:hover {
+    color: var(--primary-blue);
+    text-shadow: 0 0 10px var(--primary-blue);
+}
+
+/* ==========================================
+   GALERÍA DESTACADA (GRID)
+========================================== */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.review-card-mini {
+    background: rgba(15, 20, 30, 0.9);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 168, 255, 0.2);
+    display: block; /* Necesario porque ahora es un enlace <a> */
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover brillante morado */
+.review-card-mini:hover {
+    transform: translateY(-5px);
+    border-color: var(--neon-purple);
+    box-shadow: 0 5px 20px rgba(188, 19, 254, 0.3);
+}
+
+.review-card-mini img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 2px solid rgba(255,255,255,0.05);
+}
+
+.card-overlay {
+    padding: 15px;
+}
+
+.card-overlay h3 {
+    margin: 0;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.1rem;
+    color: white;
+    font-weight: bold;
+}

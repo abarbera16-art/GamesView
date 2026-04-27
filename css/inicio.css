@@ -1,0 +1,252 @@
+/* ==========================================
+   INICIO.CSS - DISEÑO EXCLUSIVO DE LA HOME (METACRITIC STYLE)
+========================================== */
+.cyber-container {
+    max-width: 1250px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.cyber-title {
+    font-size: 1.8rem;
+    color: var(--primary-blue);
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.cyber-title::after {
+    content: '';
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-blue), transparent);
+    flex-grow: 1;
+}
+
+/* ==========================================
+   GRID DE REVIEWS
+========================================== */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* ==========================================
+   TARJETAS ESTILO METACRITIC (DARK MODE)
+========================================== */
+.meta-card {
+    background: #1e1e1e; /* Fondo oscuro sólido como en la ref */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    text-decoration: none;
+}
+
+/* Efecto Hover: Solo brillo morado y elevación */
+.meta-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(188, 19, 254, 0.4);
+    border-color: var(--neon-purple);
+}
+
+/* Imagen Limpia en la parte superior (Sin fondo de color extra) */
+.meta-header {
+    padding: 10px 10px 0 10px; /* Pequeño margen alrededor de la imagen */
+}
+
+.meta-header img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px; /* Borde ligeramente redondeado para la imagen */
+    display: block;
+}
+
+/* Cuerpo de la tarjeta */
+.meta-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.meta-body h3 {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* Etiqueta tipo "game" */
+.meta-tag {
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #aaa;
+    font-size: 0.65rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: lowercase;
+    margin-bottom: 25px; /* Espacio antes del metascore */
+    align-self: flex-start;
+    font-weight: 600;
+}
+
+/* Fila inferior de puntuación (Idéntica a Metacritic) */
+.meta-score-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+}
+
+.meta-score-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.meta-label {
+    font-size: 0.65rem;
+    color: #888;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.meta-summary {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.meta-based {
+    font-size: 0.65rem;
+    color: rgb(0, 168, 255);
+    margin-top: 2px;
+}
+
+/* Cuadrado de la nota */
+.meta-score-box {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    font-family: 'Exo 2', sans-serif;
+}
+
+/* Colores para los cuadrados de nota (Usando las variables globales) */
+.card-high .meta-score-box { background-color: var(--score-high); color:rgb(16, 150, 247); }
+.card-mixed .meta-score-box { background-color: var(--score-mixed); color: #000; }
+.card-low .meta-score-box { background-color: var(--score-low); color: #fff; }
+
+/* Barra de proporción inferior */
+.meta-bar-container {
+    display: flex;
+    height: 6px;
+    gap: 3px;
+    margin-top: 15px;
+}
+
+.meta-bar-segment {
+    height: 100%;
+    border-radius: 3px;
+}
+
+
+/* ==========================================
+   HERO CAROUSEL (LANZAMIENTOS DESTACADOS)
+========================================== */
+.hero-carousel-container {
+    width: 100%;
+    margin: 0 auto 40px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1100px; /* Tamaño máximo en el centro de la pantalla */
+    height: 450px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 168, 255, 0.2);
+    border: 2px solid rgba(0, 168, 255, 0.4);
+    background: #000;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Oculto por defecto */
+    text-decoration: none;
+    animation: hero-fade 20s infinite; /* 4 imágenes x 5 segundos */
+}
+
+/* Efecto oscurecido a la imagen para que el texto se lea bien */
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.hero-slide:hover img {
+    opacity: 1; /* Se ilumina al pasar el ratón */
+}
+
+/* Caja de texto flotante encima de la imagen */
+.hero-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    padding: 40px 30px 20px;
+    text-align: left;
+}
+
+.hero-caption h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: #fff;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 10px #000;
+}
+
+.hero-caption p {
+    font-size: 1.2rem;
+    color: var(--neon-cyan);
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Tiempos de entrada (Delays) */
+.hero-slide:nth-child(1) { animation-delay: 0s; }
+.hero-slide:nth-child(2) { animation-delay: 5s; }
+.hero-slide:nth-child(3) { animation-delay: 10s; }
+.hero-slide:nth-child(4) { animation-delay: 15s; }
+
+/* Porcentajes de animación (100% / 4 = 25% de tiempo cada una) */
+@keyframes hero-fade {
+    0%, 20% { opacity: 1; z-index: 10; }   /* Se muestra 5 segs */
+    25%, 100% { opacity: 0; z-index: 0; }  /* Se oculta el resto del tiempo */
+}

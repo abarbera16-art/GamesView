@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamesView - Stardew Valley</title>
+    <link rel="icon" type="image/jpeg" href="../Images/favicon.jpeg">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/review_page.css">
+</head>
+<body>
+    
+    <input type="checkbox" id="acc-contraste" class="hidden-acc">
+    <input type="checkbox" id="acc-dislexia" class="hidden-acc">
+    <input type="checkbox" id="acc-texto" class="hidden-acc">
+    <input type="checkbox" id="acc-subtitulos" class="hidden-acc">
+
+    <div class="wrapper-accesibilidad">
+        <header class="futuristic-header">
+            <div class="header-container">
+                <a href="../Code/menu principal.html" class="logo-link">
+                    <img src="../Images/favicon.jpeg" alt="GAMESVIEW CORE">
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="../Code/reviews_indice.html">Reviews</a></li>
+                        <li><a href="../Noticias/Noticias.HTML">Noticias</a></li>
+                        <li><a href="../Code/indice_lanzamientos.html">Lanzamientos</a></li>
+                    </ul>
+                </nav>
+                <form action="../Code/buscar.jsp" method="GET" class="search-form">
+                    <input type="search" name="query" placeholder="SCAN DATABASE...">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
+
+            <div class="panel-accesibilidad">
+                <label for="acc-contraste" class="btn-acc">🌓 Alto Contraste</label>
+                <label for="acc-dislexia" class="btn-acc">📖 Dislexia</label>
+                <label for="acc-texto" class="btn-acc">🔎 Texto +</label>
+            </div>
+        </header>
+
+        <main class="cyber-container">
+            <section class="cabecera-juego">
+                <h1>Reseña: Stardew Valley</h1>
+                <hr>
+            </section>
+
+            <article class="ficha-juego">
+                <section class="info-principal">
+                    <div class="contenedor-trailer">
+                        <video controls preload="metadata" style="width: 100%; aspect-ratio: 16/9; background-color: #000; border-radius: 4px;">
+                            <source src="videosReview/trailer_stardew.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    
+                    <div class="detalles-juego">
+                        <h2>Información General</h2>
+                        <p><strong>Sinopsis:</strong> Heredas la vieja granja de tu abuelo en Stardew Valley. Cuentas con herramientas de segunda mano y algo de dinero para empezar tu nueva vida.</p>
+                        <p>🏆 <strong>Estatus:</strong> El rey de los simuladores de granja.</p>
+                        <p><strong>Lanzamiento:</strong> 2016 | <strong>Plataformas:</strong> Todas las plataformas</p>
+                    </div>
+                </section>
+
+                <section class="estadisticas">
+                    <h3>Nota General: <span class="score-badge score-high" style="display:inline-block; vertical-align:middle; margin-left:10px;">9.5</span></h3>
+                </section>
+
+                <section class="añadir-resena">
+                    <h3>MY SCORE</h3>
+                    <form oninput="res.value = rango.value">
+                        <label>Puntuación: <output id="res">5</output>/10</label><br>
+                        <input type="range" id="rango" min="0" max="10" value="5" step="0.1">
+                        <br><br>
+                        <textarea rows="4" placeholder="Introduce tu análisis en la base de datos..."></textarea>
+                        <br>
+                        <button type="submit">Añadir Review</button>
+                    </form>
+                </section>
+            </article>
+        </main>
+
+        <footer class="cyber-footer">
+            <p>GAMESVIEW CORE // DATABASE ENTRY // © 2026</p>
+        </footer>
+    </div>
+</body>
+</html>

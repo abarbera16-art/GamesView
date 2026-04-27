@@ -1,0 +1,113 @@
+/* ==========================================
+   LANZAMIENTOS.CSS - CATÁLOGO DE JUEGOS
+========================================== */
+
+.cyber-container {
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.catalog-title {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--primary-blue);
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.catalog-title::after {
+    content: '';
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-blue), transparent);
+    flex-grow: 1;
+}
+
+.catalog-subtitle {
+    color: #a0aab5;
+    font-size: 1rem;
+    margin-bottom: 40px;
+}
+
+/* ==========================================
+   GRID DE LANZAMIENTOS
+========================================== */
+.releases-grid {
+    display: grid;
+    /* Esto hace que quepan tantas tarjetas como sea posible según el tamaño de la pantalla */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 35px;
+}
+
+/* ==========================================
+   TARJETAS DE JUEGO (CARDS)
+========================================== */
+.release-card {
+    background: rgba(10, 15, 25, 0.85);
+    border: 1px solid rgba(0, 168, 255, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    /* Ocultamos lo que sobresale para que las esquinas de la imagen queden redondeadas */
+    overflow: hidden; 
+}
+
+.release-card a {
+    text-decoration: none;
+    display: block;
+    height: 100%;
+}
+
+.release-card:hover {
+    border-color: var(--primary-blue);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 168, 255, 0.15);
+}
+
+/* Estilo de las portadas */
+.release-card img {
+    width: 100%;
+    height: 350px; /* Altura fija para que todas las portadas queden alineadas */
+    object-fit: cover; /* Recorta la imagen sin deformarla */
+    border-bottom: 2px solid var(--primary-blue);
+    border-radius: 0; /* Quitamos el radio inferior para que pegue con el texto */
+}
+
+/* ==========================================
+   TEXTOS Y DATOS DEL JUEGO
+========================================== */
+.card-info {
+    padding: 20px;
+}
+
+.card-info h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.release-card:hover .card-info h2 {
+    color: var(--accent-cyan);
+}
+
+.card-info p {
+    color: #ccc;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.card-info strong {
+    color: var(--primary-blue);
+}
+
+.card-info time {
+    color: var(--neon-purple); /* Fechas en morado para resaltar */
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+}

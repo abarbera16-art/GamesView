@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamesView - Final Fantasy VII Rebirth</title>
+    <link rel="icon" type="image/jpeg" href="../Images/favicon.jpeg">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/lanzamiento_page.css">
+</head>
+<body>
+    
+    <input type="checkbox" id="acc-contraste" class="hidden-acc">
+    <input type="checkbox" id="acc-dislexia" class="hidden-acc">
+    <input type="checkbox" id="acc-texto" class="hidden-acc">
+    <input type="checkbox" id="acc-subtitulos" class="hidden-acc">
+
+    <div class="wrapper-accesibilidad">
+        <header class="futuristic-header">
+            <div class="header-container">
+                <a href="../Code/menu principal.html" class="logo-link">
+                    <img src="../Images/favicon.jpeg" alt="GAMESVIEW CORE">
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="../Code/reviews_indice.html">Reviews</a></li>
+                        <li><a href="../Noticias/Noticias.HTML">Noticias</a></li>
+                        <li><a href="../Code/indice_lanzamientos.html">Lanzamientos</a></li>
+                    </ul>
+                </nav>
+                <form action="../Code/buscar.jsp" method="GET" class="search-form">
+                    <input type="search" name="query" placeholder="SCAN DATABASE...">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
+
+            <div class="panel-accesibilidad">
+                <label for="acc-contraste" class="btn-acc">🌓 Alto Contraste</label>
+                <label for="acc-dislexia" class="btn-acc">📖 Dislexia</label>
+                <label for="acc-texto" class="btn-acc">🔎 Texto +</label>
+
+            </div>
+        </header>
+
+        <main class="cyber-container">
+            <section class="game-header">
+                <h1 class="game-title">Final Fantasy VII Rebirth</h1>
+                <hr>
+            </section>
+
+            <article class="game-content-grid">
+                <div class="game-cover-wrapper">
+                    <img src="../Images/FF7_Rebirth_Review.webp" alt="Final Fantasy VII Rebirth">
+                </div>
+                
+                <div class="game-details-panel">
+                    <h2>DATOS DEL SISTEMA</h2>
+                    <p class="game-description">
+                        El viaje a lo desconocido continúa. Cloud y sus compañeros huyen de la ciudad distópica de Midgar y se embarcan en un viaje por todo el planeta.
+                    </p>
+
+                    <div class="game-specs">
+                        <div><p><strong>DESARROLLADORA</strong> Square Enix</p></div>
+                        <div><p><strong>GÉNERO</strong> Action RPG</p></div>
+                        <div><p><strong>LANZAMIENTO</strong> 29 de Febrero, 2024</p></div>
+                        <div><p><strong>PLATAFORMAS</strong> PlayStation 5</p></div>
+                    </div>
+
+                    <a href="https://store.playstation.com/es-es/concept/10003999" target="_blank" rel="noopener noreferrer" class="btn-buy">RESERVAR AHORA - 79.99€</a>
+                </div>
+            </article>
+        </main>
+
+        <footer class="cyber-footer">
+            <p>GAMESVIEW CORE // STORE MODULE // © 2026</p>
+        </footer>
+    </div> </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamesView | Reviews</title>
+    <link rel="icon" type="image/jpeg" href="../Images/favicon.jpeg">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/reviews.css">
+</head>
+<body>
+
+    <input type="checkbox" id="acc-contraste" class="hidden-acc">
+    <input type="checkbox" id="acc-dislexia" class="hidden-acc">
+    <input type="checkbox" id="acc-texto" class="hidden-acc">
+    <input type="checkbox" id="acc-subtitulos" class="hidden-acc">
+
+    <div class="wrapper-accesibilidad">
+
+        <header class="futuristic-header">
+            <div class="header-container">
+                <a href="menu principal.html" class="logo-link">
+                    <img src="../Images/favicon.jpeg" alt="GAMESVIEW">
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="reviews_indice.html">Reviews</a></li>
+                        <li><a href="../Noticias/Noticias.HTML">Noticias</a></li>
+                        <li><a href="indice_lanzamientos.html">Lanzamientos</a></li>
+                    </ul>
+                </nav>
+                <form action="buscar.jsp" method="GET" class="search-form">
+                    <input type="text" name="query" placeholder="DATABASE SEARCH...">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
+
+            <div class="panel-accesibilidad">
+                <label for="acc-contraste" class="btn-acc">🌓 Alto Contraste</label>
+                <label for="acc-dislexia" class="btn-acc">📖 Dislexia</label>
+                <label for="acc-texto" class="btn-acc">🔎 Texto +</label>
+     
+            </div>
+        </header>
+
+        <main class="cyber-container">
+            
+            <h1 class="cyber-title">EXPLORA NUESTROS ANÁLISIS</h1>
+            
+            <table class="cyber-table">
+                <thead>
+                    <tr>
+                        <th>VIDEOJUEGO</th>
+                        <th>AÑO DE LANZAMIENTO</th>
+                        <th>ACCIÓN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dying Light</td>
+                        <td>2015</td>
+                        <td><a href="../Reviews/Dying_Light_Review.HTML" class="btn-link">Leer Reseña</a></td>
+                    </tr>
+                    <tr>
+                        <td>Fear & Hunger 2: Termina</td>
+                        <td>2022</td>
+                        <td><a href="../Reviews/Fear_Hunger_Review.HTML" class="btn-link">Leer Reseña</a></td>
+                    </tr>
+                    <tr>
+                        <td>NieR Replicant ver.1.22...</td>
+                        <td>2021</td>
+                        <td><a href="../Reviews/NierReplicant_Review.HTML" class="btn-link">Leer Reseña</a></td>
+                    </tr>
+                    <tr>
+                        <td>Stardew Valley</td>
+                        <td>2016</td>
+                        <td><a href="../Reviews/Stardew_Review.HTML" class="btn-link">Leer Reseña</a></td>
+                    </tr>
+                    <tr>
+                        <td>The Legend of Zelda: Tears of the Kingdom</td>
+                        <td>2023</td>
+                        <td><a href="../Reviews/TLOZ_Tears_Review.HTML" class="btn-link">Leer Reseña</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="cyber-title">GALERÍA DESTACADA</h2>
+            
+            <section class="reviews-grid">
+                
+                <a href="../Reviews/Dying_Light_Review.HTML" class="review-card-mini">
+                    <img src="../Images/dying light.webp" alt="Dying Light">
+                    <div class="card-overlay">
+                        <h3>Dying Light</h3>
+                    </div>
+                </a>
+
+                <a href="../Reviews/Fear_Hunger_Review.HTML" class="review-card-mini">
+                    <img src="../Images/fear_hunger.jpg" alt="Fear & Hunger 2">
+                    <div class="card-overlay">
+                        <h3>Fear & Hunger 2</h3>
+                    </div>
+                </a>
+
+                <a href="../Reviews/NierReplicant_Review.HTML" class="review-card-mini">
+                    <img src="../Images/nier_replicant.jpg" alt="NieR Replicant">
+                    <div class="card-overlay">
+                        <h3>NieR Replicant</h3>
+                    </div>
+                </a>
+
+                <a href="../Reviews/Stardew_Review.HTML" class="review-card-mini">
+                    <img src="../Images/stardew_valley.jpg" alt="Stardew Valley">
+                    <div class="card-overlay">
+                        <h3>Stardew Valley</h3>
+                    </div>
+                </a>
+
+                <a href="../Reviews/TLOZ_Tears_Review.HTML" class="review-card-mini">
+                    <img src="../Images/zelda-tears-of-the-kingdom-button-2k-1663127818777.webp" alt="Zelda">
+                    <div class="card-overlay">
+                        <h3>The Legend of Zelda</h3>
+                    </div>
+                </a>
+
+            </section>
+
+        </main>
+
+        <footer class="cyber-footer" style="text-align: center; padding: 30px; margin-top: 50px; font-family: 'Orbitron', sans-serif; color: #555;">
+            GAMESVIEW CORE // REVIEWS DATABASE // © 2026
+        </footer>
+
+    </div> </body>
+</html>

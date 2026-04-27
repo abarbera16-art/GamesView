@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamesView - Stardew Valley</title>
+</head>
+<body>
+
+    <header id="menu-principal">
+        </header>
+
+    <main>
+        <section class="cabecera-juego">
+            <h1>Reseña: Stardew Valley</h1>
+            <hr>
+        </section>
+
+        <article class="ficha-juego">
+            <section class="info-principal">
+                <div class="contenedor-trailer">
+                    <video controls width="100%" style="max-width: 600px;">
+                        <source src="videosReview/Trailer Stardew Valley.mp4" type="video/mp4">
+                        Tu navegador no soporta el formato de video.
+                    </video>
+                </div>
+                <div class="detalles-juego">
+                    <h2>Información General</h2>
+                    <p><strong>Sinopsis:</strong> Heredas la granja de tu abuelo y empiezas una nueva vida de agricultura y comunidad.</p>
+                    <p>🏆 <strong>Premios:</strong> Golden Joystick Breakthrough Award.</p>
+                    <p><strong>Desarrolladora:</strong> ConcernedApe | <strong>Lanzamiento:</strong> 2016</p>
+                    <p><strong>Plataformas:</strong> PC, PS4, Xbox One, Switch, Móviles</p>
+                </div>
+            </section>
+
+            <section class="estadisticas">
+                <h3>Nota General GamesView: <span id="nota-media-juego-1">TBD</span></h3>
+                <p>Basado en 0 reseñas</p>
+            </section>
+
+            <section class="añadir-resena">
+                <h3>MY SCORE</h3>
+                <form oninput="resultado_juego_1.value = rango_juego_1.value">
+                    <label>Puntuación: <output id="resultado_juego_1">5</output>/10</label><br>
+                    <input type="range" id="rango_juego_1" name="puntuacion" min="0" max="10" value="5" step="1" style="width: 100%; max-width: 400px;">
+                    <br><br>
+                    <textarea placeholder="Escribe tu reseña..." rows="4" style="width: 100%; max-width: 600px;" required></textarea>
+                    <br>
+                    <button type="submit">Add My Review</button>
+                </form>
+            </section>
+        </article>
+    </main>
+</body>
+</html>

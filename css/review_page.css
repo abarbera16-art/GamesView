@@ -1,0 +1,189 @@
+/* ==========================================
+   REVIEW_PAGE.CSS - DISEÑO GENÉRICO DE RESEÑAS
+========================================== */
+
+.cyber-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* ==========================================
+   TÍTULO DE LA RESEÑA
+========================================== */
+.cabecera-juego {
+    margin-bottom: 30px;
+}
+
+.cabecera-juego h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    color: var(--primary-blue);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.cabecera-juego hr {
+    border: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-blue), transparent);
+    margin-top: 10px;
+    box-shadow: 0 0 10px var(--primary-blue);
+}
+
+/* ==========================================
+   VÍDEO Y DETALLES
+========================================== */
+.info-principal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* Caja del Vídeo */
+.contenedor-trailer {
+    flex: 1 1 550px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 168, 255, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+    transition: var(--transition);
+}
+
+.contenedor-trailer:hover {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 25px rgba(181, 23, 255, 0.3);
+}
+
+.contenedor-trailer video {
+    border-radius: 4px;
+    border: 1px solid rgba(0, 168, 255, 0.1);
+    display: block;
+}
+
+/* Caja de Texto e Información */
+.detalles-juego {
+    flex: 1 1 300px;
+    background: rgba(10, 15, 25, 0.85);
+    border: 1px solid rgba(0, 168, 255, 0.2);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.detalles-juego h2 {
+    color: var(--accent-cyan);
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.detalles-juego p {
+    color: #ccc;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.detalles-juego strong {
+    color: var(--primary-blue);
+    font-weight: 700;
+}
+
+/* ==========================================
+   CAJA DE ESTADÍSTICAS
+========================================== */
+.estadisticas {
+    background: rgba(0, 168, 255, 0.05);
+    border: 1px solid var(--primary-blue);
+    padding: 20px;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 40px;
+    box-shadow: inset 0 0 20px rgba(0, 168, 255, 0.1);
+}
+
+.estadisticas h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+/* ==========================================
+   FORMULARIO DE RESEÑA
+========================================== */
+.añadir-resena {
+    background: rgba(10, 15, 25, 0.85);
+    border: 1px solid rgba(0, 168, 255, 0.2);
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+}
+
+.añadir-resena h3 {
+    color: var(--accent-cyan);
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.añadir-resena label {
+    color: var(--primary-blue);
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-family: 'Orbitron', sans-serif;
+}
+
+input[type="range"] {
+    width: 100%;
+    max-width: 400px;
+    accent-color: var(--accent-cyan);
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+textarea {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 168, 255, 0.4);
+    border-radius: 4px;
+    color: #fff;
+    padding: 15px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.95rem;
+    resize: vertical;
+    transition: var(--transition);
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+}
+
+button[type="submit"] {
+    background: transparent;
+    color: var(--accent-cyan);
+    border: 1px solid var(--accent-cyan);
+    padding: 12px 25px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: var(--transition);
+    margin-top: 15px;
+}
+
+button[type="submit"]:hover {
+    background: var(--accent-cyan);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+    transform: translateY(-2px);
+}

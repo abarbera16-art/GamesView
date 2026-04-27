@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamesView - Dying Light</title>
+</head>
+<body>
+    <header id="menu-principal"></header>
+    <main>
+        <section class="cabecera-juego">
+            <h1>Reseña: Dying Light</h1>
+            <hr>
+        </section>
+
+        <article class="ficha-juego">
+            <section class="info-principal">
+                <div class="contenedor-trailer">
+                    <video controls width="100%" style="max-width: 600px;">
+                        <source src="videosReview/Trailer Dying Light.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="detalles-juego">
+                    <h2>Información General</h2>
+                    <p><strong>Sinopsis:</strong> Parkour y combate contra infectados. De día suministros, de noche supervivencia pura.</p>
+                    <p>🏆 <strong>Estatus:</strong> Referente en juegos de zombies.</p>
+                    <p><strong>Lanzamiento:</strong> 2015 | <strong>Plataformas:</strong> PC, PS4, Xbox One, Switch</p>
+                </div>
+            </section>
+
+            <section class="estadisticas"><h3>Nota General: TBD</h3></section>
+
+            <section class="añadir-resena">
+                <h3>MY SCORE</h3>
+                <form oninput="res.value = rango.value">
+                    <label>Puntuación: <output id="res">5</output>/10</label><br>
+                    <input type="range" id="rango" min="0" max="10" value="5" step="1" style="width: 100%; max-width: 400px;">
+                    <br><br>
+                    <textarea rows="4" style="width: 100%; max-width: 600px;"></textarea>
+                    <br><button type="submit">Add My Review</button>
+                </form>
+            </section>
+        </article>
+    </main>
+</body>
+</html>

@@ -1,0 +1,364 @@
+/* ==========================================
+   GLOBAL.CSS - PROTOCOLO MAESTRO V5.0
+========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap');
+
+:root {
+    --primary-blue: #00a8ff;
+    --neon-cyan: #00ffcc;
+    --neon-purple: #bc13fe; /* Tu color de identidad */
+    --bg-black: #020406;
+}
+
+body {
+    background-color: var(--bg-black);
+    
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #ffffff;
+    font-family: 'Exo 2', sans-serif;
+    margin: 0;
+}
+
+/* HEADER CON ESTILO MORADO NEÓN */
+.futuristic-header {
+    background: rgba(5, 10, 15, 0.95);
+    backdrop-filter: blur(10px);
+
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
+
+.header-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo-link img {
+    height: 40px;
+    background: white;
+    padding: 3px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px white;
+}
+
+/* MENÚ SIEMPRE HORIZONTAL */
+.main-nav ul {
+    display: flex; 
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.main-nav a:hover {
+    color: var(--neon-purple);
+    text-shadow: 0 0 10px var(--neon-purple);
+}
+
+.search-form {
+    display: flex;
+    border: 1px solid var(--neon-purple);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.search-form input {
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    outline: none;
+}
+
+.search-form button {
+    background: var(--neon-purple);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+/* ==========================================
+   CONFIGURACIÓN BASE DE ACCESIBILIDAD
+========================================== */
+:root {
+    --acc-bg: #020406;             /* Fondo por defecto */
+    --acc-text: #ffffff;           /* Texto por defecto */
+    --acc-font: 'Exo 2', sans-serif; /* Fuente por defecto */
+    --acc-size: 16px;              /* Tamaño base */
+    --acc-spacing: normal;         /* Espaciado normal */
+    --acc-line-height: 1.5;        /* Interlineado normal */
+}
+
+/* Ocultamos los checkboxes reales */
+.hidden-acc {
+    display: none;
+}
+
+/* Estilos de los botones del panel */
+.panel-accesibilidad {
+    background: #111;
+    padding: 10px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    border-bottom: 2px solid var(--neon-purple);
+}
+
+.btn-acc {
+    color: white;
+    background: #333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: 0.3s;
+}
+
+.btn-acc:hover {
+    background: var(--primary-blue);
+}
+
+/* Aplicar las variables al contenedor principal */
+.wrapper-accesibilidad {
+    background-color: var(--acc-bg);
+    color: var(--acc-text);
+    font-family: var(--acc-font);
+    font-size: var(--acc-size);
+    letter-spacing: var(--acc-spacing);
+    line-height: var(--acc-line-height);
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ==========================================
+   LÓGICA DE LOS BOTONES (CHECKBOX HACK)
+========================================== */
+
+/* 1. Si Alto Contraste está activado (Amarillo sobre Negro) */
+#acc-contraste:checked ~ .wrapper-accesibilidad {
+    --acc-bg: #000000;
+    --acc-text: #ffff00; 
+}
+
+/* 2. Si Modo Dislexia está activado */
+#acc-dislexia:checked ~ .wrapper-accesibilidad {
+    --acc-font: Arial, Helvetica, sans-serif; /* Fuente más limpia */
+    --acc-spacing: 0.15em;                    /* Separa las letras */
+    --acc-line-height: 1.8;                   /* Separa las líneas */
+}
+
+/* 3. Si Texto Grande está activado */
+#acc-texto:checked ~ .wrapper-accesibilidad {
+    --acc-size: 22px; /* Aumenta el tamaño base */
+}
+
+/* ==========================================
+   4. REDUCCIÓN DE MOVIMIENTO (Nativo)
+========================================== */
+/* Esto no necesita botón. Detecta si el usuario tiene desactivadas las animaciones en su Windows/Mac/Móvil */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ==========================================
+   FORZADOS DE ACCESIBILIDAD (Añadir al final de global.css)
+========================================== */
+
+/* 1. MODO ALTO CONTRASTE ABSOLUTO */
+#acc-contraste:checked ~ .wrapper-accesibilidad,
+#acc-contraste:checked ~ .wrapper-accesibilidad .futuristic-header,
+#acc-contraste:checked ~ .wrapper-accesibilidad .meta-card {
+    background-color: #000000 !important;
+    background-image: none !important; /* Quita el fondo de la ciudad */
+}
+
+/* Cambiamos todos los textos y bordes a amarillo brillante */
+#acc-contraste:checked ~ .wrapper-accesibilidad * {
+    color: #ffff00 !important;
+    border-color: #ffff00 !important;
+    box-shadow: none !important; /* Quitamos brillos para que sea legible */
+    text-shadow: none !important;
+}
+
+/* 2. MODO TEXTO GRANDE (Targeteando tus clases específicas) */
+/* Aumentamos a mano los elementos que tenían tamaños fijos */
+#acc-texto:checked ~ .wrapper-accesibilidad .cyber-title {
+    font-size: 2.6rem !important; /* Original: 1.8rem */
+}
+
+#acc-texto:checked ~ .wrapper-accesibilidad .meta-body h3 {
+    font-size: 1.6rem !important; /* Original: 1.2rem */
+}
+
+#acc-texto:checked ~ .wrapper-accesibilidad .meta-tag,
+#acc-texto:checked ~ .wrapper-accesibilidad .meta-label,
+#acc-texto:checked ~ .wrapper-accesibilidad .meta-based {
+    font-size: 0.95rem !important; /* Original: 0.65rem */
+}
+
+#acc-texto:checked ~ .wrapper-accesibilidad .meta-summary {
+    font-size: 1.3rem !important; /* Original: 0.9rem */
+}
+
+#acc-texto:checked ~ .wrapper-accesibilidad .main-nav a {
+    font-size: 1.2rem !important; /* Original: 0.85rem */
+}
+
+/* FORZADO TEXTO + PARA TARJETAS DE LANZAMIENTOS */
+#acc-texto:checked ~ .wrapper-accesibilidad .card-info h2 {
+    font-size: 1.8rem !important; /* Aumenta el título del juego */
+}
+
+#acc-texto:checked ~ .wrapper-accesibilidad .card-info p,
+#acc-texto:checked ~ .wrapper-accesibilidad .card-info time {
+    font-size: 1.2rem !important; /* Aumenta los datos (Desarrolladora, Género, Fecha) */
+    line-height: 1.6 !important;  /* Mejora el espacio entre líneas para que no se pisen */
+}
+
+
+/* ACCESIBILIDAD HERO CAROUSEL */
+#acc-contraste:checked ~ .wrapper-accesibilidad .hero-carousel {
+    border-color: #ffff00 !important;
+    box-shadow: none !important;
+}
+
+#acc-texto:checked ~ .wrapper-accesibilidad .hero-caption h3 {
+    font-size: 3rem !important;
+}
+
+#acc-texto:checked ~ .wrapper-accesibilidad .hero-caption p {
+    font-size: 1.5rem !important;
+}
+/* FORZADO TEXTO + PARA PÁGINAS DE LANZAMIENTOS (Arreglado) */
+#acc-texto:checked ~ .wrapper-accesibilidad .game-details-panel h2 {
+    font-size: 1.8rem !important; /* Aumenta el título "DATOS DEL SISTEMA" */
+}
+
+#acc-texto:checked ~ .wrapper-accesibilidad .game-description,
+#acc-texto:checked ~ .wrapper-accesibilidad .game-specs p {
+    font-size: 1.2rem !important; /* Aumenta la descripción y las especificaciones */
+    line-height: 1.6 !important;   /* Mejora el espaciado para que sea legible */
+}
+
+/* FORZADO ALTO CONTRASTE PARA LA CAJA DE DATOS */
+#acc-contraste:checked ~ .wrapper-accesibilidad .game-details-panel {
+    background-color: #000000 !important;
+    border-color: #ffff00 !important;
+}
+
+#acc-contraste:checked ~ .wrapper-accesibilidad .game-specs strong {
+    color: #ffff00 !important; /* Fuerza a que los títulos como "GÉNERO" sean amarillos */
+}
+/* ==========================================
+   PANEL DE ACCESIBILIDAD (Header Secundario)
+========================================== */
+.panel-accesibilidad {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding-top: 12px;
+    margin-top: 12px;
+    /* Crea una línea divisoria sutil respecto al menú principal */
+    border-top: 1px solid rgba(188, 19, 254); 
+    width: 100%;
+}
+
+/* Estilo de los botones (Labels interactivos) */
+.btn-acc {
+    background: transparent;
+    border: 1px solid rgba(0, 168, 255, 0.4);
+    color: #a0aab5;
+    padding: 6px 16px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+/* Efecto Hover */
+.btn-acc:hover {
+    background: rgba(0, 168, 255, 0.1);
+    color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 10px rgba(0, 168, 255, 0.4);
+}
+
+/* Blindaje del menú de navegación principal */
+.main-nav ul {
+    display: flex;         /* Pone los elementos en fila */
+    flex-direction: row;   /* Asegura la dirección horizontal */
+    justify-content: center;
+    list-style-type: none; /* Elimina los puntos de la lista */
+    gap: 30px;             /* Separación entre Reviews, Noticias... */
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav a {
+    text-decoration: none; /* Quita el subrayado de los enlaces */
+    color: inherit;        /* Hereda el color blanco/gris de tu cabecera */
+}
+
+.cyber-footer {
+    text-align: center;
+    padding: 40px;
+    margin-top: 50px;
+    font-family: 'Orbitron', sans-serif;
+    color: #888; /* Un gris claro/oscuro para que contraste con el fondo negro */
+    border-top: 1px solid rgba(0, 168, 255, 0.2); /* Opcional: línea superior para separar */
+}
+
+/* FORZADO PARA PÁGINAS DE LANZAMIENTOS Y RESEÑAS */
+#acc-texto:checked ~ .wrapper-accesibilidad .game-details-panel h2,
+#acc-texto:checked ~ .wrapper-accesibilidad .detalles-juego h2 {
+    font-size: 2rem !important; /* Aumenta títulos como "DATOS DEL SISTEMA" */
+}
+
+#acc-texto:checked ~ .wrapper-accesibilidad .game-description,
+#acc-texto:checked ~ .wrapper-accesibilidad .game-specs p,
+#acc-texto:checked ~ .wrapper-accesibilidad .detalles-juego p {
+    font-size: 1.4rem !important; /* Aumenta las descripciones y sinopsis */
+    line-height: 1.6 !important;  /* Mejora el espacio para que no se pisen las letras */
+}
+
+#acc-texto:checked ~ .wrapper-accesibilidad .game-specs strong,
+#acc-texto:checked ~ .wrapper-accesibilidad .detalles-juego strong {
+    font-size: 1.1rem !important; /* Aumenta las etiquetas en negrita */
+}
+
+.modal-content video {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* ESTA ES LA LÍNEA MÁGICA /
+    background-color: #000; / Fondo negro por si el vídeo tarda en cargar */
+    border-radius: 4px;
+    display: block;
+    outline: none;
+}
