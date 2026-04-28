@@ -1,44 +1,42 @@
 /* ==========================================
-    MAIN.JS - MOTOR INTEGRAL GAMESVIEW V9.0
-    ESTADO: COMPLETO - CON COLORES EDITADOS
+    MAIN.JS - MOTOR INTEGRAL GAMESVIEW V10.0
+    ESTADO: MULTI-JUEGO INTELIGENTE + COLORES
    ========================================== */
 
-// 1. CONFIGURACIÓN ÚNICA DE LA BASE DE DATOS
-const FIREBASE_URL = "https://gamesview-db-default-rtdb.firebaseio.com/reviews.json";
+// 1. CONFIGURACIÓN BASE DE LA BASE DE DATOS
+const FIREBASE_BASE_URL = "https://gamesview-db-default-rtdb.firebaseio.com/reviews";
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("✅ Sistema GamesView cargado y conectado a Firebase.");
+    console.log("✅ Sistema GamesView v10.0 iniciado.");
 
-    // Cargar las reseñas que ya existen en la nube nada más empezar
-    cargarResenas();
-
-    // ==========================================
-    // 2. GESTIÓN DEL FORMULARIO DE RESEÑAS
-    // ==========================================
+    // Detectamos el formulario y el ID del juego actual
     const formResena = document.getElementById('form-resena');
+    const gameId = formResena ? formResena.getAttribute('data-game') : null;
 
-    if (formResena) {
+    if (gameId) {
+        console.log(`🎮 Cargando base de datos para: ${gameId}`);
+        cargarResenas(gameId);
+
         formResena.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Evita que la página se recargue
+            e.preventDefault();
             
-            console.log("🚀 Detectado click en el botón. Procesando envío...");
+            console.log("🚀 Enviando reporte a la base de datos...");
 
             const puntuacion = document.getElementById('rango').value;
             const texto = document.getElementById('texto-resena').value;
 
             const nuevaResena = {
-                juegoId: "nier_replicant",
                 puntuacion: parseFloat(puntuacion),
                 comentario: texto,
                 fecha: new Date().toISOString()
             };
 
-            await enviarResena(nuevaResena, formResena);
+            await enviarResena(gameId, nuevaResena, formResena);
         });
     }
 
     // ==========================================
-    // 3. BUSCADOR EN TIEMPO REAL
+    // 2. BUSCADOR EN TIEMPO REAL
     // ==========================================
     const searchInput = document.getElementById('main-search');
     if (searchInput) {
@@ -54,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 4. ACCESIBILIDAD Y PERSISTENCIA
+    // 3. ACCESIBILIDAD Y PERSISTENCIA
     // ==========================================
     const ajustes = [
         { id: '#acc-contraste', clave: 'pref-contraste' },
@@ -75,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 5. CONTADORES ANIMADOS (Scores)
+    // 4. CONTADORES ANIMADOS (Scores)
     // ==========================================
     const scores = document.querySelectorAll('.count-up');
     const observer = new IntersectionObserver((entries) => {
@@ -109,45 +107,46 @@ document.addEventListener('DOMContentLoaded', () => {
     FUNCIONES DE COMUNICACIÓN CON FIREBASE
    ========================================== */
 
-// ENVIAR DATOS (POST)
-async function enviarResena(resena, formulario) {
+// ENVIAR DATOS (POST) - Ahora usa gameId para la ruta
+async function enviarResena(gameId, resena, formulario) {
     try {
-        const respuesta = await fetch(FIREBASE_URL, {
+        const url = `${FIREBASE_BASE_URL}/${gameId}.json`;
+        const respuesta = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(resena)
         });
 
         if (respuesta.ok) {
-            alert("✅ ¡Enviado! Tu reseña ya está en la base de datos.");
+            alert("✅ ¡Enviado! Tu reseña se ha guardado en el sector correspondiente.");
             formulario.reset();
             const output = formulario.querySelector('output[name="res"]');
             if (output) output.innerText = "5";
             
-            cargarResenas(); // Recarga la lista para que aparezca la nueva
+            cargarResenas(gameId);
         } else {
             throw new Error("Error en la respuesta del servidor");
         }
     } catch (error) {
         console.error("Fallo al enviar:", error);
-        alert("❌ Error: No se ha podido conectar con la base de datos.");
+        alert("❌ Error: No se ha podido conectar con el terminal de datos.");
     }
 }
 
-// RECUPERAR DATOS Y PINTARLOS (GET)
-async function cargarResenas() {
+// RECUPERAR DATOS Y PINTARLOS (GET) - Filtrado por gameId
+async function cargarResenas(gameId) {
     const contenedor = document.getElementById('contenedor-resenas');
     if (!contenedor) return;
 
     try {
-        const respuesta = await fetch(FIREBASE_URL);
+        const url = `${FIREBASE_BASE_URL}/${gameId}.json`;
+        const respuesta = await fetch(url);
         const datos = await respuesta.json();
 
-        // Título de la sección (He puesto el color Púrpura Neón)
+        // Título con color Púrpura Neón
         contenedor.innerHTML = '<h2 style="margin-top: 40px; border-bottom: 2px solid #bc13fe; padding-bottom: 10px; color: #bc13fe; text-transform: uppercase;">COMUNIDAD // DATALOGS</h2>';
 
         if (datos) {
-            // Recorremos los datos de Firebase (del más nuevo al más viejo)
             Object.values(datos).reverse().forEach(res => {
                 contenedor.innerHTML += `
                     <div class="meta-card" style="margin-bottom: 20px; padding: 20px; border-left: 5px solid #00f3ff; background: rgba(0, 0, 0, 0.85); border-radius: 4px; box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);">
@@ -157,7 +156,7 @@ async function cargarResenas() {
                                 SCORE: ${res.puntuacion}
                             </span>
                             
-                            <small style="color: #00f3ff; font-family: monospace; letter-spacing: 1px;">
+                            <small style="color: #00f3ff; font-family: monospace;">
                                 ${new Date(res.fecha).toLocaleDateString()}
                             </small>
                         </div>
@@ -169,7 +168,7 @@ async function cargarResenas() {
                 `;
             });
         } else {
-            contenedor.innerHTML += '<p style="color: #666; padding: 20px;">No hay registros previos en este terminal.</p>';
+            contenedor.innerHTML += '<p style="color: #666; padding: 20px;">No hay transmisiones para este sector todavía.</p>';
         }
     } catch (error) {
         console.error("Error al cargar:", error);
