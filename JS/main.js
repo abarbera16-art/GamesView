@@ -7,29 +7,29 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================
     // CAPTURA DE RESEÑAS
     // ==========================================
-    const formResena = document.getElementById('form-resena');
-    
-    if (formResena) {
-        formResena.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Evita la recarga de la página
+    // ==========================================
+// CAPTURA DE RESEÑAS (ACTUALIZADO A FIREBASE)
+// ==========================================
+const formResena = document.getElementById('form-resena');
 
-            // Capturar valores
-            const puntuacion = document.getElementById('rango').value;
-            const texto = document.getElementById('texto-resena').value;
+if (formResena) {
+    formResena.addEventListener('submit', async (e) => {
+        e.preventDefault(); 
 
-            // Construir el objeto JSON
-            const nuevaResena = {
-                juegoId: "nier_replicant", // Identificador único del juego
-                puntuacion: parseFloat(puntuacion),
-                comentario: texto,
-                fecha: new Date().toISOString()
-            };
+        const puntuacion = document.getElementById('rango').value;
+        const texto = document.getElementById('texto-resena').value;
 
-            console.log("Procesando reseña...");
-            await enviarResenaAGitHub(nuevaResena, formResena);
-        });
-    }
+        const nuevaResena = {
+            juegoId: "nier_replicant", 
+            puntuacion: parseFloat(puntuacion),
+            comentario: texto,
+            fecha: new Date().toISOString()
+        };
 
+        // CAMBIO CLAVE: Ahora llamamos a la función de Firebase
+        await enviarResena(nuevaResena, formResena);
+    });
+}
     // ==========================================
     // 2. SISTEMA DE ACCESIBILIDAD (PERSISTENCIA)
     // ==========================================
@@ -116,65 +116,48 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("✅ 9. Sistema de contadores listo.");
 });
 
+// URL de tu base de datos (¡No olvides el /reviews.json al final!)
+const FIREBASE_URL = "https://gamesview-db-default-rtdb.firebaseio.com/reviews.json";
 
+// 1. FUNCIÓN PARA ENVIAR (POST)
+async function enviarResena(resena, formulario) {
+    try {
+        const respuesta = await fetch(FIREBASE_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(resena)
+        });
 
-async function enviarResenaAGitHub(nuevaResenaObj, formularioElemento) {
-// REEMPLAZAR CON TUS DATOS EXACTOS
-   // DATOS EXACTOS CONFIGURADOS
-    const usuario = "abarbera16-art";
-    const repositorio = "GamesView";
-    const rutaArchivo = "reviews.json"; 
-    const token = "";
+        if (respuesta.ok) {
+            alert("✅ Reseña guardada en la base de datos.");
+            formulario.reset();
+            cargarResenas(); // Esto refresca la lista automáticamente
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("❌ Error de conexión con Firebase.");
+    }
+}
 
-    const urlApi = `https://api.github.com/repos/${usuario}/${repositorio}/contents/${rutaArchivo}`;
-    
-    const cabeceras = {
-        "Authorization": `Bearer ${token}`,
-        "Accept": "application/vnd.github.v3+json",
-        "Content-Type": "application/json"
-    };
+// 2. FUNCIÓN PARA MOSTRAR (GET)
+async function cargarResenas() {
+    const contenedor = document.getElementById('contenedor-resenas');
+    if (!contenedor) return;
 
     try {
-        // FASE 2: Obtener JSON actual
-        const respuestaGet = await fetch(urlApi, { method: "GET", headers: cabeceras });
-        
-        if (!respuestaGet.ok) throw new Error("No se pudo leer el archivo de GitHub");
-        
-        const datosGithub = await respuestaGet.json();
+        const respuesta = await fetch(FIREBASE_URL);
+        const datos = await respuesta.json();
+        contenedor.innerHTML = ""; 
 
-        // FASE 3: Decodificar y modificar
-        const jsonTextoActual = decodeURIComponent(escape(atob(datosGithub.content)));
-        const listaResenas = JSON.parse(jsonTextoActual);
-
-        // Añadir nuevo dato
-        listaResenas.push(nuevaResenaObj);
-
-        // Volver a codificar a Base64
-        const nuevoJsonTexto = JSON.stringify(listaResenas, null, 2);
-        const nuevoBase64 = btoa(unescape(encodeURIComponent(nuevoJsonTexto)));
-
-        // FASE 4: Sobrescribir
-        const cuerpoPeticion = JSON.stringify({
-            message: `Nueva reseña añadida: ${nuevaResenaObj.juegoId}`,
-            content: nuevoBase64,
-            sha: datosGithub.sha
-        });
-
-        const respuestaPut = await fetch(urlApi, {
-            method: "PUT",
-            headers: cabeceras,
-            body: cuerpoPeticion
-        });
-
-        if (respuestaPut.ok) {
-            alert("✅ Reseña almacenada en la base de datos con éxito.");
-            formularioElemento.reset(); // Limpia el formulario HTML
-        } else {
-            throw new Error("Fallo al escribir en GitHub");
+        if (datos) {
+            Object.values(datos).reverse().forEach(res => {
+                contenedor.innerHTML += `
+                    <div class="meta-card" style="margin-bottom: 15px; padding: 15px; border-left: 3px solid #bc13fe;">
+                        <p><strong>Puntuación:</strong> ${res.puntuacion}/10</p>
+                        <p>${res.comentario}</p>
+                        <small style="color: #555;">${new Date(res.fecha).toLocaleString()}</small>
+                    </div>`;
+            });
         }
-
-    } catch (error) {
-        console.error("Error crítico en el protocolo de guardado:", error);
-        alert("❌ Error de conexión con la base de datos.");
-    }
+    } catch (e) { console.error("Error al cargar:", e); }
 }
