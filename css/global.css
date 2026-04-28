@@ -25,11 +25,13 @@ body {
 .futuristic-header {
     background: rgba(5, 10, 15, 0.95);
     backdrop-filter: blur(10px);
-
     padding: 10px 0;
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 9999; /* Capa base del header */
+    
+    /* TÉCNICA CLAVE: Permite que los clics pasen "a través" de las zonas vacías */
+    pointer-events: none; 
 }
 
 .header-container {
@@ -39,6 +41,9 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
+    
+    /* RESTAURAR CLIC: Los elementos aquí (logo, links) deben volver a ser clicables */
+    pointer-events: auto; 
 }
 
 .logo-link img {
@@ -122,6 +127,11 @@ body {
     gap: 15px;
     justify-content: center;
     border-bottom: 2px solid var(--neon-purple);
+    
+    /* BLINDAJE TOTAL: Aseguramos que esté por encima y reciba clics */
+    position: relative;
+    z-index: 10000 !important; 
+    pointer-events: auto !important;
 }
 
 .btn-acc {
@@ -361,4 +371,21 @@ body {
     border-radius: 4px;
     display: block;
     outline: none;
+}
+
+/* Transición suave para el filtrado */
+.release-card, .meta-card, .news-list-item, .cyber-table tbody tr {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Esconder scrollbar del carrusel para que se vea más limpio */
+.hero-carousel {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+.hero-carousel::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+.review-card-mini {
+    transition: opacity 0.4s ease;
 }
