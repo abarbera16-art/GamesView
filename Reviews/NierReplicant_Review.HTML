@@ -67,29 +67,32 @@
                     <h3>Nota General: <span class="score-badge score-high" style="display:inline-block; vertical-align:middle; margin-left:10px;">8.8</span></h3>
                 </section>
 
-                <section class="añadir-resena">
-                    <form id="form-resena" oninput="res.value = rango.value">
-    <div class="input-group">
-        <label for="rango">Puntuación: <output name="res">5</output>/10</label>
-        <input type="range" id="rango" name="rango" min="0" max="10" step="0.5" value="5" style="width: 100%;">
-    </div>
+               <section class="añadir-resena" style="padding: 20px; background: rgba(0,0,0,0.3); border-radius: 8px; margin-bottom: 30px;">
+    <h3>MY SCORE</h3>
+    
+    <form id="form-resena" oninput="res.value = rango.value">
+        
+        <div class="input-group" style="margin-bottom: 20px;">
+            <label for="rango" style="display: block; margin-bottom: 10px;">
+                Puntuación: <output name="res" style="color: var(--neon-blue); font-weight: bold;">5</output> / 10
+            </label>
+            <input type="range" id="rango" name="rango" min="0" max="10" step="0.5" value="5" style="width: 100%; cursor: pointer;">
+        </div>
 
-    <div class="input-group" style="margin-top: 20px;">
-        <textarea id="texto-resena" placeholder="Escribe aquí tu análisis..." required style="width: 100%; min-height: 100px; background: rgba(0,0,0,0.5); color: white; border: 1px solid var(--neon-blue); padding: 10px;"></textarea>
-    </div>
+        <div class="input-group">
+            <label for="texto-resena" style="display: block; margin-bottom: 10px;">TU ANÁLISIS:</label>
+            <textarea id="texto-resena" placeholder="Escribe aquí tu opinión sobre el juego..." required 
+                style="width: 100%; min-height: 120px; background: rgba(20, 20, 20, 0.8); color: white; border: 1px solid var(--neon-purple); padding: 15px; font-family: inherit; border-radius: 4px;"></textarea>
+        </div>
 
-    <button type="submit" class="cyber-button" style="margin-top: 20px;">AÑADIR REVIEW</button>
-</form>
-                </section>
-            </article> <section id="contenedor-resenas" class="cyber-container">
-                <h2 style="margin-top: 40px; border-bottom: 1px solid var(--neon-purple);">COMUNIDAD // DATALOGS</h2>
-                </section>
-            </article>
-        </main>
+        <button type="submit" class="cyber-button" style="margin-top: 20px; padding: 10px 25px; cursor: pointer; background: var(--neon-purple); border: none; color: white; font-weight: bold; text-transform: uppercase;">
+            AÑADIR REVIEW
+        </button>
+    </form>
+</section>
 
-        <footer class="cyber-footer">
-            <p>GAMESVIEW CORE // DATABASE ENTRY // © 2026</p>
-        </footer>
-   </div> <script src="../JS/main.js"></script>
-</body>
-</html>
+<section id="contenedor-resenas" class="cyber-container">
+    <h2 style="margin-top: 40px; border-bottom: 1px solid var(--neon-purple); padding-bottom: 10px;">
+        COMUNIDAD // DATALOGS
+    </h2>
+    </section>
