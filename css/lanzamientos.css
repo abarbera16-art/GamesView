@@ -38,9 +38,15 @@
 ========================================== */
 .releases-grid {
     display: grid;
-    /* Esto hace que quepan tantas tarjetas como sea posible según el tamaño de la pantalla */
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: 1fr; /* Móvil: 1 sola columna */
     gap: 35px;
+}
+
+@media (min-width: 768px) {
+    .releases-grid {
+        /* PC y Tablet: Varias columnas de mínimo 260px */
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
 }
 
 /* ==========================================
