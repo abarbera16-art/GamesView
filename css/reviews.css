@@ -19,22 +19,33 @@
 /* ==========================================
    TABLA DE DATOS
 ========================================== */
+/* 1. EL ENVOLTORIO (Añadimos esto para que no se corte en móvil) */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 20px;
+}
+
+/* 2. TU TABLA (Mantenemos tus estilos y añadimos el ancho mínimo) */
 .cyber-table {
     width: 100%;
+    min-width: 700px; /* Clave para que no se aplaste en el móvil */
     border-collapse: collapse;
     background: rgba(10, 15, 24, 0.85);
     margin-bottom: 60px;
     border: 1px solid rgba(188, 19, 254, 0.2);
     border-radius: 8px;
-    overflow: hidden;
 }
 
+/* 3. TUS CELDAS (Copiado exacto de tu captura para mantener el formato) */
 .cyber-table th, .cyber-table td {
     padding: 15px 20px;
     text-align: left;
     border-bottom: 1px solid rgba(0, 168, 255, 0.1);
 }
 
+/* 4. TUS CABECERAS (Copiado exacto de tu captura) */
 .cyber-table th {
     background: rgba(188, 19, 254, 0.1);
     color: var(--neon-cyan);
