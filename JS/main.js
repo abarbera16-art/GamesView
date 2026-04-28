@@ -101,6 +101,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.5 });
 
     scores.forEach(s => observer.observe(s));
+
+    // ==========================================
+    // 5. CONTROL DEL POP-UP DE VÍDEO (NUEVO)
+    // ==========================================
+    const modal = document.getElementById('modal-trailer');
+    const videoPlayer = document.getElementById('video-player');
+    const closeBtn = document.querySelector('.close-modal');
+
+    if(modal && videoPlayer) {
+        // Al hacer clic en los botones de tráiler
+        document.querySelectorAll('.btn-trailer').forEach(boton => {
+            boton.addEventListener('click', () => {
+                const rutaVideo = boton.getAttribute('data-video');
+                videoPlayer.src = rutaVideo;
+                modal.style.display = 'block';
+                videoPlayer.play();
+            });
+        });
+
+        // Función para cerrar
+        const cerrarModal = () => {
+            modal.style.display = 'none';
+            videoPlayer.pause();
+            videoPlayer.src = ""; 
+        };
+
+        // Cerrar al darle a la X
+        if (closeBtn) closeBtn.addEventListener('click', cerrarModal);
+
+        // Cerrar al hacer clic fuera del vídeo
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) cerrarModal();
+        });
+    }
 });
 
 /* ==========================================
