@@ -124,7 +124,7 @@ async function enviarResenaAGitHub(nuevaResenaObj, formularioElemento) {
     const usuario = "abarbera16-art";
     const repositorio = "GamesView";
     const rutaArchivo = "reviews.json"; 
-    const token = "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";
+    const token = "";
 
     const urlApi = `https://api.github.com/repos/${usuario}/${repositorio}/contents/${rutaArchivo}`;
     
