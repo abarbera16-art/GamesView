@@ -119,11 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 async function enviarResenaAGitHub(nuevaResenaObj, formularioElemento) {
-    // REEMPLAZAR CON TUS DATOS EXACTOS
-    const usuario = "TU_USUARIO_GITHUB";
-    const repositorio = "TU_REPOSITORIO";
-    const rutaArchivo = "ruta/al/archivo/reviews.json"; 
-    const token = "TU_TOKEN_PAT"; // Pegar aquí el token de la Fase 1
+// REEMPLAZAR CON TUS DATOS EXACTOS
+   // DATOS EXACTOS CONFIGURADOS
+    const usuario = "abarbera16-art";
+    const repositorio = "GamesView";
+    const rutaArchivo = "reviews.json"; 
+    const token = "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";
 
     const urlApi = `https://api.github.com/repos/${usuario}/${repositorio}/contents/${rutaArchivo}`;
     
