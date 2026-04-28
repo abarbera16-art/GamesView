@@ -1,29 +1,32 @@
 /* ==========================================
-    MAIN.JS - MOTOR INTEGRAL GAMESVIEW V7.0
+    MAIN.JS - MOTOR INTEGRAL GAMESVIEW V8.0
    ========================================== */
 
-// 1. CONFIGURACIÓN GLOBAL
+// 1. CONFIGURACIÓN ÚNICA DE LA BASE DE DATOS
 const FIREBASE_URL = "https://gamesview-db-default-rtdb.firebaseio.com/reviews.json";
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("✅ Motor JavaScript iniciado correctamente.");
+    console.log("✅ Sistema GamesView cargado y conectado a Firebase.");
 
-    // CARGAR RESEÑAS AL INICIAR
+    // Cargar las reseñas que ya existen en la nube
     cargarResenas();
 
     // ==========================================
-    // 2. CAPTURA DE RESEÑAS (FIREBASE)
+    // 2. GESTIÓN DEL FORMULARIO DE RESEÑAS
     // ==========================================
     const formResena = document.getElementById('form-resena');
 
     if (formResena) {
         formResena.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            console.log("🚀 Enviando reseña a Firebase...");
+            e.preventDefault(); // Evita que la página se recargue
+            
+            console.log("🚀 Detectado click en el botón. Procesando envío...");
 
+            // Capturamos los valores de los inputs de tu HTML
             const puntuacion = document.getElementById('rango').value;
             const texto = document.getElementById('texto-resena').value;
 
+            // Creamos el objeto con los datos
             const nuevaResena = {
                 juegoId: "nier_replicant",
                 puntuacion: parseFloat(puntuacion),
@@ -31,86 +34,79 @@ document.addEventListener('DOMContentLoaded', () => {
                 fecha: new Date().toISOString()
             };
 
+            // Llamamos a la función para subirlo a Firebase
             await enviarResena(nuevaResena, formResena);
         });
     }
 
     // ==========================================
-    // 3. SISTEMA DE ACCESIBILIDAD
-    // ==========================================
-    const ajustesAccesibilidad = [
-        { idBoton: '#acc-contraste', claveStorage: 'pref-contraste' },
-        { idBoton: '#acc-dislexia', claveStorage: 'pref-dislexia' },
-        { idBoton: '#acc-texto', claveStorage: 'pref-texto' },
-        { idBoton: '#acc-subtitulos', claveStorage: 'pref-subtitulos' }
-    ];
-
-    ajustesAccesibilidad.forEach(ajuste => {
-        const input = document.querySelector(ajuste.idBoton);
-        if (!input) return;
-
-        if (localStorage.getItem(ajuste.claveStorage) === 'activado') {
-            input.checked = true;
-        }
-
-        input.addEventListener('change', (evento) => {
-            const estado = evento.target.checked ? 'activado' : 'desactivado';
-            localStorage.setItem(ajuste.claveStorage, estado);
-        });
-    });
-
-    // ==========================================
-    // 4. BUSCADOR EN TIEMPO REAL
+    // 3. BUSCADOR EN TIEMPO REAL
     // ==========================================
     const searchInput = document.getElementById('main-search');
-    const itemsToFilter = document.querySelectorAll('.cyber-table tbody tr, .review-card-mini, .release-card, .meta-card, .news-list-item');
-
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
-            itemsToFilter.forEach(item => {
-                const text = item.innerText.toLowerCase();
-                item.style.display = text.includes(term) ? "" : "none";
+            const items = document.querySelectorAll('.cyber-table tbody tr, .review-card-mini, .release-card, .meta-card');
+            
+            items.forEach(item => {
+                item.style.display = item.innerText.toLowerCase().includes(term) ? "" : "none";
             });
         });
     }
 
     // ==========================================
+    // 4. ACCESIBILIDAD Y PERSISTENCIA
+    // ==========================================
+    const ajustes = [
+        { id: '#acc-contraste', clave: 'pref-contraste' },
+        { id: '#acc-dislexia', clave: 'pref-dislexia' },
+        { id: '#acc-texto', clave: 'pref-texto' },
+        { id: '#acc-subtitulos', clave: 'pref-subtitulos' }
+    ];
+
+    ajustes.forEach(ajuste => {
+        const input = document.querySelector(ajuste.id);
+        if (!input) return;
+
+        if (localStorage.getItem(ajuste.clave) === 'activado') input.checked = true;
+
+        input.addEventListener('change', (e) => {
+            localStorage.setItem(ajuste.clave, e.target.checked ? 'activado' : 'desactivado');
+        });
+    });
+
+    // ==========================================
     // 5. CONTADORES ANIMADOS
     // ==========================================
     const scores = document.querySelectorAll('.count-up');
-    const scoreObserver = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = entry.target;
-                const endValue = parseFloat(target.innerText);
-                let startValue = 0;
-                const duration = 1500;
-                const stepTime = 20;
-                const increment = endValue / (duration / stepTime);
-
+                const end = parseFloat(target.innerText);
+                let current = 0;
+                const step = end / 50;
                 const timer = setInterval(() => {
-                    startValue += increment;
-                    if (startValue >= endValue) {
-                        target.innerText = endValue.toFixed(1);
+                    current += step;
+                    if (current >= end) {
+                        target.innerText = end.toFixed(1);
                         clearInterval(timer);
                     } else {
-                        target.innerText = startValue.toFixed(1);
+                        target.innerText = current.toFixed(1);
                     }
-                }, stepTime);
-                scoreObserver.unobserve(target);
+                }, 30);
+                observer.unobserve(target);
             }
         });
-    }, { threshold: 0.5 });
-
-    scores.forEach(score => scoreObserver.observe(score));
+    });
+    scores.forEach(s => observer.observe(s));
 });
 
 /* ==========================================
-    FUNCIONES DE COMUNICACIÓN (FIREBASE)
+    FUNCIONES DE COMUNICACIÓN CON FIREBASE
    ========================================== */
 
-// FUNCIÓN PARA ENVIAR (POST)
+// ENVIAR DATOS (POST)
 async function enviarResena(resena, formulario) {
     try {
         const respuesta = await fetch(FIREBASE_URL, {
@@ -120,18 +116,24 @@ async function enviarResena(resena, formulario) {
         });
 
         if (respuesta.ok) {
-            alert("✅ Reseña guardada con éxito.");
+            alert("✅ ¡Enviado! Tu reseña ya está en la base de datos.");
             formulario.reset();
-            document.getElementsByName('res')[0].innerText = "5"; // Resetea el numerito del output
-            cargarResenas(); // Recarga la lista inmediatamente
+            // Reseteamos el numerito del output a 5
+            const output = formulario.querySelector('output[name="res"]');
+            if (output) output.innerText = "5";
+            
+            // Recargamos la lista para ver la nueva reseña
+            cargarResenas();
+        } else {
+            throw new Error("Error en la respuesta del servidor");
         }
     } catch (error) {
-        console.error("Error al enviar:", error);
-        alert("❌ Error de conexión con la base de datos.");
+        console.error("Fallo al enviar:", error);
+        alert("❌ Error: No se ha podido conectar con la base de datos.");
     }
 }
 
-// FUNCIÓN PARA CARGAR Y MOSTRAR (GET)
+// RECUPERAR DATOS (GET)
 async function cargarResenas() {
     const contenedor = document.getElementById('contenedor-resenas');
     if (!contenedor) return;
@@ -139,24 +141,27 @@ async function cargarResenas() {
     try {
         const respuesta = await fetch(FIREBASE_URL);
         const datos = await respuesta.json();
-        
-        // Limpiamos el contenedor pero mantenemos el título si lo pusiste fuera
-        contenedor.innerHTML = '<h2 style="margin-top: 40px; border-bottom: 1px solid #bc13fe; padding-bottom: 10px;">COMUNIDAD // DATALOGS</h2>'; 
+
+        // Mantenemos el título de la sección
+        contenedor.innerHTML = '<h2 style="margin-top: 40px; border-bottom: 2px solid var(--neon-purple); padding-bottom: 10px; color: var(--neon-purple);">COMUNIDAD // DATALOGS</h2>';
 
         if (datos) {
-            // Convertimos el objeto de Firebase a array y le damos la vuelta para ver lo más nuevo primero
+            // Recorremos los datos de Firebase (del más nuevo al más viejo)
             Object.values(datos).reverse().forEach(res => {
                 contenedor.innerHTML += `
-                    <div class="meta-card" style="margin-bottom: 15px; padding: 15px; border-left: 3px solid #bc13fe; background: rgba(20,20,20,0.5);">
-                        <p style="color: #bc13fe; font-weight: bold; margin-bottom: 5px;">PUNTUACIÓN: ${res.puntuacion}/10</p>
-                        <p style="color: #fff; margin-bottom: 10px;">${res.comentario}</p>
-                        <small style="color: #666; font-size: 0.8em;">${new Date(res.fecha).toLocaleString()}</small>
-                    </div>`;
+                    <div class="meta-card" style="margin-bottom: 20px; padding: 20px; border-left: 5px solid var(--neon-blue); background: rgba(10, 10, 10, 0.7); border-radius: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span style="background: var(--neon-blue); color: black; padding: 2px 10px; font-weight: bold; border-radius: 2px;">SCORE: ${res.puntuacion}</span>
+                            <small style="color: #444;">${new Date(res.fecha).toLocaleDateString()}</small>
+                        </div>
+                        <p style="color: #e0e0e0; line-height: 1.6; font-style: italic;">"${res.comentario}"</p>
+                    </div>
+                `;
             });
         } else {
-            contenedor.innerHTML += '<p style="color: #666; padding: 20px;">Aún no hay reseñas. ¡Sé el primero!</p>';
+            contenedor.innerHTML += '<p style="color: #555; padding: 20px;">No hay registros previos en este terminal.</p>';
         }
-    } catch (e) { 
-        console.error("Error al cargar reseñas:", e); 
+    } catch (error) {
+        console.error("Error al cargar:", error);
     }
 }
