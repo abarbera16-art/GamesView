@@ -1,66 +1,66 @@
 /* ==========================================
-   MAIN.JS - MOTOR INTEGRAL GAMESVIEW V6.0
-========================================== */
+    MAIN.JS - MOTOR INTEGRAL GAMESVIEW V7.0
+   ========================================== */
+
+// 1. CONFIGURACIÓN GLOBAL
+const FIREBASE_URL = "https://gamesview-db-default-rtdb.firebaseio.com/reviews.json";
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("✅ 1. El motor JavaScript se ha cargado correctamente.");
-// ==========================================
-    // CAPTURA DE RESEÑAS
+    console.log("✅ Motor JavaScript iniciado correctamente.");
+
+    // CARGAR RESEÑAS AL INICIAR
+    cargarResenas();
+
     // ==========================================
+    // 2. CAPTURA DE RESEÑAS (FIREBASE)
     // ==========================================
-// CAPTURA DE RESEÑAS (ACTUALIZADO A FIREBASE)
-// ==========================================
-const formResena = document.getElementById('form-resena');
+    const formResena = document.getElementById('form-resena');
 
-if (formResena) {
-    formResena.addEventListener('submit', async (e) => {
-        e.preventDefault(); 
+    if (formResena) {
+        formResena.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log("🚀 Enviando reseña a Firebase...");
 
-        const puntuacion = document.getElementById('rango').value;
-        const texto = document.getElementById('texto-resena').value;
+            const puntuacion = document.getElementById('rango').value;
+            const texto = document.getElementById('texto-resena').value;
 
-        const nuevaResena = {
-            juegoId: "nier_replicant", 
-            puntuacion: parseFloat(puntuacion),
-            comentario: texto,
-            fecha: new Date().toISOString()
-        };
+            const nuevaResena = {
+                juegoId: "nier_replicant",
+                puntuacion: parseFloat(puntuacion),
+                comentario: texto,
+                fecha: new Date().toISOString()
+            };
 
-        // CAMBIO CLAVE: Ahora llamamos a la función de Firebase
-        await enviarResena(nuevaResena, formResena);
-    });
-}
+            await enviarResena(nuevaResena, formResena);
+        });
+    }
+
     // ==========================================
-    // 2. SISTEMA DE ACCESIBILIDAD (PERSISTENCIA)
+    // 3. SISTEMA DE ACCESIBILIDAD
     // ==========================================
     const ajustesAccesibilidad = [
         { idBoton: '#acc-contraste', claveStorage: 'pref-contraste' },
         { idBoton: '#acc-dislexia', claveStorage: 'pref-dislexia' },
         { idBoton: '#acc-texto', claveStorage: 'pref-texto' },
-        { idBoton: '#acc-subtitulos', claveStorage: 'pref-subtitulos' } // Recuperado
+        { idBoton: '#acc-subtitulos', claveStorage: 'pref-subtitulos' }
     ];
 
-    function gestionarPersistencia(ajuste) {
+    ajustesAccesibilidad.forEach(ajuste => {
         const input = document.querySelector(ajuste.idBoton);
         if (!input) return;
 
-        // Recuperar estado guardado
         if (localStorage.getItem(ajuste.claveStorage) === 'activado') {
             input.checked = true;
         }
 
-        // Guardar cambios
         input.addEventListener('change', (evento) => {
             const estado = evento.target.checked ? 'activado' : 'desactivado';
             localStorage.setItem(ajuste.claveStorage, estado);
         });
-    }
-
-    ajustesAccesibilidad.forEach(gestionarPersistencia);
-    console.log("✅ 6. Persistencia de accesibilidad cargada.");
+    });
 
     // ==========================================
-    // 3. BUSCADOR EN TIEMPO REAL (FILTRADO TOTAL)
+    // 4. BUSCADOR EN TIEMPO REAL
     // ==========================================
     const searchInput = document.getElementById('main-search');
     const itemsToFilter = document.querySelectorAll('.cyber-table tbody tr, .review-card-mini, .release-card, .meta-card, .news-list-item');
@@ -68,24 +68,15 @@ if (formResena) {
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
-            
             itemsToFilter.forEach(item => {
                 const text = item.innerText.toLowerCase();
-                if (text.includes(term)) {
-                    item.style.display = ""; 
-                    item.style.opacity = "1";
-                } else {
-                    item.style.display = "none";
-                }
+                item.style.display = text.includes(term) ? "" : "none";
             });
         });
-        console.log("✅ 7. Buscador vinculado a todos los elementos.");
     }
 
     // ==========================================
-
-    // ==========================================
-    // 5. CONTADOR ANIMADO (Scores)
+    // 5. CONTADORES ANIMADOS
     // ==========================================
     const scores = document.querySelectorAll('.count-up');
     const scoreObserver = new IntersectionObserver((entries) => {
@@ -113,13 +104,13 @@ if (formResena) {
     }, { threshold: 0.5 });
 
     scores.forEach(score => scoreObserver.observe(score));
-    console.log("✅ 9. Sistema de contadores listo.");
 });
 
-// URL de tu base de datos (¡No olvides el /reviews.json al final!)
-const FIREBASE_URL = "https://gamesview-db-default-rtdb.firebaseio.com/reviews.json";
+/* ==========================================
+    FUNCIONES DE COMUNICACIÓN (FIREBASE)
+   ========================================== */
 
-// 1. FUNCIÓN PARA ENVIAR (POST)
+// FUNCIÓN PARA ENVIAR (POST)
 async function enviarResena(resena, formulario) {
     try {
         const respuesta = await fetch(FIREBASE_URL, {
@@ -129,17 +120,18 @@ async function enviarResena(resena, formulario) {
         });
 
         if (respuesta.ok) {
-            alert("✅ Reseña guardada en la base de datos.");
+            alert("✅ Reseña guardada con éxito.");
             formulario.reset();
-            cargarResenas(); // Esto refresca la lista automáticamente
+            document.getElementsByName('res')[0].innerText = "5"; // Resetea el numerito del output
+            cargarResenas(); // Recarga la lista inmediatamente
         }
     } catch (error) {
-        console.error("Error:", error);
-        alert("❌ Error de conexión con Firebase.");
+        console.error("Error al enviar:", error);
+        alert("❌ Error de conexión con la base de datos.");
     }
 }
 
-// 2. FUNCIÓN PARA MOSTRAR (GET)
+// FUNCIÓN PARA CARGAR Y MOSTRAR (GET)
 async function cargarResenas() {
     const contenedor = document.getElementById('contenedor-resenas');
     if (!contenedor) return;
@@ -147,17 +139,24 @@ async function cargarResenas() {
     try {
         const respuesta = await fetch(FIREBASE_URL);
         const datos = await respuesta.json();
-        contenedor.innerHTML = ""; 
+        
+        // Limpiamos el contenedor pero mantenemos el título si lo pusiste fuera
+        contenedor.innerHTML = '<h2 style="margin-top: 40px; border-bottom: 1px solid #bc13fe; padding-bottom: 10px;">COMUNIDAD // DATALOGS</h2>'; 
 
         if (datos) {
+            // Convertimos el objeto de Firebase a array y le damos la vuelta para ver lo más nuevo primero
             Object.values(datos).reverse().forEach(res => {
                 contenedor.innerHTML += `
-                    <div class="meta-card" style="margin-bottom: 15px; padding: 15px; border-left: 3px solid #bc13fe;">
-                        <p><strong>Puntuación:</strong> ${res.puntuacion}/10</p>
-                        <p>${res.comentario}</p>
-                        <small style="color: #555;">${new Date(res.fecha).toLocaleString()}</small>
+                    <div class="meta-card" style="margin-bottom: 15px; padding: 15px; border-left: 3px solid #bc13fe; background: rgba(20,20,20,0.5);">
+                        <p style="color: #bc13fe; font-weight: bold; margin-bottom: 5px;">PUNTUACIÓN: ${res.puntuacion}/10</p>
+                        <p style="color: #fff; margin-bottom: 10px;">${res.comentario}</p>
+                        <small style="color: #666; font-size: 0.8em;">${new Date(res.fecha).toLocaleString()}</small>
                     </div>`;
             });
+        } else {
+            contenedor.innerHTML += '<p style="color: #666; padding: 20px;">Aún no hay reseñas. ¡Sé el primero!</p>';
         }
-    } catch (e) { console.error("Error al cargar:", e); }
+    } catch (e) { 
+        console.error("Error al cargar reseñas:", e); 
+    }
 }
