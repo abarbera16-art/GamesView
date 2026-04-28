@@ -1,5 +1,6 @@
 /* ==========================================
-    MAIN.JS - MOTOR INTEGRAL GAMESVIEW V8.0
+    MAIN.JS - MOTOR INTEGRAL GAMESVIEW V9.0
+    ESTADO: COMPLETO - CON COLORES EDITADOS
    ========================================== */
 
 // 1. CONFIGURACIÓN ÚNICA DE LA BASE DE DATOS
@@ -8,7 +9,7 @@ const FIREBASE_URL = "https://gamesview-db-default-rtdb.firebaseio.com/reviews.j
 document.addEventListener('DOMContentLoaded', () => {
     console.log("✅ Sistema GamesView cargado y conectado a Firebase.");
 
-    // Cargar las reseñas que ya existen en la nube
+    // Cargar las reseñas que ya existen en la nube nada más empezar
     cargarResenas();
 
     // ==========================================
@@ -22,11 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             console.log("🚀 Detectado click en el botón. Procesando envío...");
 
-            // Capturamos los valores de los inputs de tu HTML
             const puntuacion = document.getElementById('rango').value;
             const texto = document.getElementById('texto-resena').value;
 
-            // Creamos el objeto con los datos
             const nuevaResena = {
                 juegoId: "nier_replicant",
                 puntuacion: parseFloat(puntuacion),
@@ -34,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 fecha: new Date().toISOString()
             };
 
-            // Llamamos a la función para subirlo a Firebase
             await enviarResena(nuevaResena, formResena);
         });
     }
@@ -46,10 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
-            const items = document.querySelectorAll('.cyber-table tbody tr, .review-card-mini, .release-card, .meta-card');
+            const items = document.querySelectorAll('.cyber-table tbody tr, .review-card-mini, .release-card, .meta-card, .news-list-item');
             
             items.forEach(item => {
-                item.style.display = item.innerText.toLowerCase().includes(term) ? "" : "none";
+                const text = item.innerText.toLowerCase();
+                item.style.display = text.includes(term) ? "" : "none";
             });
         });
     }
@@ -76,29 +75,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 5. CONTADORES ANIMADOS
+    // 5. CONTADORES ANIMADOS (Scores)
     // ==========================================
     const scores = document.querySelectorAll('.count-up');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = entry.target;
-                const end = parseFloat(target.innerText);
-                let current = 0;
-                const step = end / 50;
+                const endValue = parseFloat(target.innerText);
+                let startValue = 0;
+                const duration = 1500;
+                const stepTime = 20;
+                const increment = endValue / (duration / stepTime);
+
                 const timer = setInterval(() => {
-                    current += step;
-                    if (current >= end) {
-                        target.innerText = end.toFixed(1);
+                    startValue += increment;
+                    if (startValue >= endValue) {
+                        target.innerText = endValue.toFixed(1);
                         clearInterval(timer);
                     } else {
-                        target.innerText = current.toFixed(1);
+                        target.innerText = startValue.toFixed(1);
                     }
-                }, 30);
+                }, stepTime);
                 observer.unobserve(target);
             }
         });
-    });
+    }, { threshold: 0.5 });
+
     scores.forEach(s => observer.observe(s));
 });
 
@@ -118,12 +121,10 @@ async function enviarResena(resena, formulario) {
         if (respuesta.ok) {
             alert("✅ ¡Enviado! Tu reseña ya está en la base de datos.");
             formulario.reset();
-            // Reseteamos el numerito del output a 5
             const output = formulario.querySelector('output[name="res"]');
             if (output) output.innerText = "5";
             
-            // Recargamos la lista para ver la nueva reseña
-            cargarResenas();
+            cargarResenas(); // Recarga la lista para que aparezca la nueva
         } else {
             throw new Error("Error en la respuesta del servidor");
         }
@@ -133,7 +134,7 @@ async function enviarResena(resena, formulario) {
     }
 }
 
-// RECUPERAR DATOS (GET)
+// RECUPERAR DATOS Y PINTARLOS (GET)
 async function cargarResenas() {
     const contenedor = document.getElementById('contenedor-resenas');
     if (!contenedor) return;
@@ -142,24 +143,33 @@ async function cargarResenas() {
         const respuesta = await fetch(FIREBASE_URL);
         const datos = await respuesta.json();
 
-        // Mantenemos el título de la sección
-        contenedor.innerHTML = '<h2 style="margin-top: 40px; border-bottom: 2px solid var(--neon-purple); padding-bottom: 10px; color: var(--neon-purple);">COMUNIDAD // DATALOGS</h2>';
+        // Título de la sección (He puesto el color Púrpura Neón)
+        contenedor.innerHTML = '<h2 style="margin-top: 40px; border-bottom: 2px solid #bc13fe; padding-bottom: 10px; color: #bc13fe; text-transform: uppercase;">COMUNIDAD // DATALOGS</h2>';
 
         if (datos) {
             // Recorremos los datos de Firebase (del más nuevo al más viejo)
             Object.values(datos).reverse().forEach(res => {
                 contenedor.innerHTML += `
-                    <div class="meta-card" style="margin-bottom: 20px; padding: 20px; border-left: 5px solid var(--neon-blue); background: rgba(10, 10, 10, 0.7); border-radius: 4px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <span style="background: var(--neon-blue); color: black; padding: 2px 10px; font-weight: bold; border-radius: 2px;">SCORE: ${res.puntuacion}</span>
-                            <small style="color: #444;">${new Date(res.fecha).toLocaleDateString()}</small>
+                    <div class="meta-card" style="margin-bottom: 20px; padding: 20px; border-left: 5px solid #00f3ff; background: rgba(0, 0, 0, 0.85); border-radius: 4px; box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            
+                            <span style="background: #00f3ff; color: #000000; padding: 3px 12px; font-weight: bold; border-radius: 2px; font-family: monospace;">
+                                SCORE: ${res.puntuacion}
+                            </span>
+                            
+                            <small style="color: #00f3ff; font-family: monospace; letter-spacing: 1px;">
+                                ${new Date(res.fecha).toLocaleDateString()}
+                            </small>
                         </div>
-                        <p style="color: #e0e0e0; line-height: 1.6; font-style: italic;">"${res.comentario}"</p>
+
+                        <p style="color: #ffffff; line-height: 1.6; font-size: 1.1em; font-weight: 300; margin: 0;">
+                            "${res.comentario}"
+                        </p>
                     </div>
                 `;
             });
         } else {
-            contenedor.innerHTML += '<p style="color: #555; padding: 20px;">No hay registros previos en este terminal.</p>';
+            contenedor.innerHTML += '<p style="color: #666; padding: 20px;">No hay registros previos en este terminal.</p>';
         }
     } catch (error) {
         console.error("Error al cargar:", error);
