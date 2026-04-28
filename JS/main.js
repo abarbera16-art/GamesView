@@ -5,55 +5,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("✅ 1. El motor JavaScript se ha cargado correctamente.");
 
-    // ==========================================
-    // 1. LÓGICA DE LA VENTANA MODAL (TRÁILERS)
-    // ==========================================
-    if (!document.getElementById('cyber-modal')) {
-        const modalHTML = `
-            <div id="cyber-modal">
-                <div class="modal-content">
-                    <button id="close-modal" class="close-btn">✖</button>
-                    <video id="modal-video" controls>
-                        <source src="" type="video/mp4">
-                        Tu navegador no soporta vídeos.
-                    </video>
-                </div>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-        console.log("✅ 2. Ventana Modal inyectada correctamente.");
-    }
-
-    const modal = document.getElementById('cyber-modal');
-    const video = document.getElementById('modal-video');
-    const closeBtn = document.getElementById('close-modal');
-    const trailerButtons = document.querySelectorAll('.btn-trailer');
-
-    console.log(`✅ 3. He encontrado ${trailerButtons.length} botones de tráiler.`);
-
-    trailerButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            const videoSrc = button.getAttribute('data-video');
-            console.log(`🎬 4. Intentando cargar el vídeo: ${videoSrc}`);
-            
-            if (videoSrc) {
-                video.src = videoSrc;
-                modal.classList.add('modal-visible');
-                video.play().catch(err => console.error("❌ Error al reproducir:", err));
-            }
-        });
-    });
-
-    const closeModal = () => {
-        modal.classList.remove('modal-visible');
-        video.pause();
-        video.currentTime = 0;
-        console.log("⏹️ 5. Tráiler cerrado.");
-    };
-
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
     // ==========================================
     // 2. SISTEMA DE ACCESIBILIDAD (PERSISTENCIA)
@@ -108,18 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 4. AUTO-CAROUSEL (Hero Section)
-    // ==========================================
-    const carousel = document.querySelector('.hero-carousel');
-    if (carousel) {
-        let scrollAmount = 0;
-        setInterval(() => {
-            scrollAmount += 400; // Salto de ancho de slide
-            if (scrollAmount >= carousel.scrollWidth) scrollAmount = 0;
-            carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
-        }, 5000);
-        console.log("✅ 8. Carrusel automático activado.");
-    }
 
     // ==========================================
     // 5. CONTADOR ANIMADO (Scores)
