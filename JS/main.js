@@ -4,7 +4,31 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("✅ 1. El motor JavaScript se ha cargado correctamente.");
+// ==========================================
+    // CAPTURA DE RESEÑAS
+    // ==========================================
+    const formResena = document.getElementById('form-resena');
+    
+    if (formResena) {
+        formResena.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Evita la recarga de la página
 
+            // Capturar valores
+            const puntuacion = document.getElementById('rango').value;
+            const texto = document.getElementById('texto-resena').value;
+
+            // Construir el objeto JSON
+            const nuevaResena = {
+                juegoId: "nier_replicant", // Identificador único del juego
+                puntuacion: parseFloat(puntuacion),
+                comentario: texto,
+                fecha: new Date().toISOString()
+            };
+
+            console.log("Procesando reseña...");
+            await enviarResenaAGitHub(nuevaResena, formResena);
+        });
+    }
 
     // ==========================================
     // 2. SISTEMA DE ACCESIBILIDAD (PERSISTENCIA)
@@ -91,3 +115,65 @@ document.addEventListener('DOMContentLoaded', () => {
     scores.forEach(score => scoreObserver.observe(score));
     console.log("✅ 9. Sistema de contadores listo.");
 });
+
+
+
+async function enviarResenaAGitHub(nuevaResenaObj, formularioElemento) {
+    // REEMPLAZAR CON TUS DATOS EXACTOS
+    const usuario = "TU_USUARIO_GITHUB";
+    const repositorio = "TU_REPOSITORIO";
+    const rutaArchivo = "ruta/al/archivo/reviews.json"; 
+    const token = "TU_TOKEN_PAT"; // Pegar aquí el token de la Fase 1
+
+    const urlApi = `https://api.github.com/repos/${usuario}/${repositorio}/contents/${rutaArchivo}`;
+    
+    const cabeceras = {
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/vnd.github.v3+json",
+        "Content-Type": "application/json"
+    };
+
+    try {
+        // FASE 2: Obtener JSON actual
+        const respuestaGet = await fetch(urlApi, { method: "GET", headers: cabeceras });
+        
+        if (!respuestaGet.ok) throw new Error("No se pudo leer el archivo de GitHub");
+        
+        const datosGithub = await respuestaGet.json();
+
+        // FASE 3: Decodificar y modificar
+        const jsonTextoActual = decodeURIComponent(escape(atob(datosGithub.content)));
+        const listaResenas = JSON.parse(jsonTextoActual);
+
+        // Añadir nuevo dato
+        listaResenas.push(nuevaResenaObj);
+
+        // Volver a codificar a Base64
+        const nuevoJsonTexto = JSON.stringify(listaResenas, null, 2);
+        const nuevoBase64 = btoa(unescape(encodeURIComponent(nuevoJsonTexto)));
+
+        // FASE 4: Sobrescribir
+        const cuerpoPeticion = JSON.stringify({
+            message: `Nueva reseña añadida: ${nuevaResenaObj.juegoId}`,
+            content: nuevoBase64,
+            sha: datosGithub.sha
+        });
+
+        const respuestaPut = await fetch(urlApi, {
+            method: "PUT",
+            headers: cabeceras,
+            body: cuerpoPeticion
+        });
+
+        if (respuestaPut.ok) {
+            alert("✅ Reseña almacenada en la base de datos con éxito.");
+            formularioElemento.reset(); // Limpia el formulario HTML
+        } else {
+            throw new Error("Fallo al escribir en GitHub");
+        }
+
+    } catch (error) {
+        console.error("Error crítico en el protocolo de guardado:", error);
+        alert("❌ Error de conexión con la base de datos.");
+    }
+}
