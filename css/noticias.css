@@ -23,9 +23,16 @@
 ========================================== */
 .news-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr; 
+    grid-template-columns: 1fr; /* Móvil: Todo en 1 sola columna hacia abajo */
     gap: 30px;
     margin-bottom: 60px;
+}
+
+@media (min-width: 768px) {
+    .news-grid {
+        /* PC: Vuelve al diseño de Noticia Principal (2) + Lateral (1) */
+        grid-template-columns: 2fr 1fr;
+    }
 }
 
 /* Noticia Principal (Borde Morado) */
